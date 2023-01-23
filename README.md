@@ -20,13 +20,14 @@ TOKEN="Your_token_here"
 
 ### Define your channels
 
-The channel IDs are defined in src/infra/channels.service.ts
-```javascript
-const CHANNEL_IDS = [
+The channel IDs are defined in src/infra/channels-static.json
+```json
+[
     {
-        key: 'custom_value', id: 'channel_id',
+        "key": "custom_key",
+        "id": "channel_id"
     }
-];
+]
 ```
 
 ### Build & Run

@@ -1,11 +1,8 @@
 import { catchError, map, Observable, of } from 'rxjs';
 import { IChannel } from '../models/channel.model';
+import * as CHANNELS_JSON from './channels-static.json';
 
-const CHANNEL_IDS = [
-    {
-        key: 'kimida-test', id: '1062129921176121414',
-    }
-];
+const CHANNELS: IChannel[] = (CHANNELS_JSON as any).default;
 
 export class ChannelsService {
 
@@ -15,7 +12,7 @@ export class ChannelsService {
     ) { }
 
     public getChannels(): Observable<IChannel[]> {
-        return of(CHANNEL_IDS).pipe(
+        return of(CHANNELS).pipe(
             catchError(() => of(null))
         );
     }

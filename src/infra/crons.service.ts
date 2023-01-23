@@ -2,29 +2,9 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { Cron } from '../cron';
 import { ICron } from '../models/cron.model';
 import cron from 'cron';
+import * as CRONS_JSON from './crons-static.json';
 
-const CRON_DATA = [
-    {
-        id: 'every-minute',
-        value: '0 * * * * *',
-        description: 'Every Minute'
-    },
-    {
-        id: 'every-day-10-am',
-        value: '0 0 9 * * *',
-        description: 'Every Day At 10 AM'
-    },
-    {
-        id: 'every-hour',
-        value: '0 0 */1 * * *',
-        description: 'Every Hour'
-    },
-    {
-        id: 'every-10-seconds',
-        value: '*/10 * * * * *',
-        description: 'Every 10 seconds'
-    }
-];
+const CRONS: ICron[] = (CRONS_JSON as any).default;
 
 export class CronsService {
 
@@ -34,7 +14,7 @@ export class CronsService {
     ) { }
 
     public getCrons(): Observable<ICron[]> {
-        return of(CRON_DATA).pipe(
+        return of(CRONS).pipe(
             catchError(() => of(null))
         );
     }

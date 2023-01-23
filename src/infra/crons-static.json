@@ -1,0 +1,22 @@
+[
+    {
+        "id": "every-minute",
+        "value": "0 * * * * *",
+        "description": "Every Minute"
+    },
+    {
+        "id": "every-day-10-am",
+        "value": "0 0 9 * * *",
+        "description": "Every Day At 10 AM"
+    },
+    {
+        "id": "every-hour",
+        "value": "0 0 */1 * * *",
+        "description": "Every Hour"
+    },
+    {
+        "id": "every-10-seconds",
+        "value": "*/10 * * * * *",
+        "description": "Every 10 seconds"
+    }
+]
