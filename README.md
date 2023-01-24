@@ -40,6 +40,7 @@ npm start
 ## References
 
 - [discord.js](https://discord.js.org): Node.js module to interact with the Discord API.
-- [vite-note](https://www.npmjs.com/package/vite-node): Vite as Node runtime.
+- [vite-note](https://github.com/vitest-dev/vitest/tree/main/packages/vite-node): Vite as Node runtime.
 - [TypeScript](https://www.typescriptlang.org): JavaScript with syntax for types.
 - [RxJS](https://rxjs.dev): Reactive Extensions Library for JavaScript.
+- [injection-js](https://github.com/mgechev/injection-js): Dependency injection library for JavaScript and TypeScript.

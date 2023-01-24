@@ -1,11 +1,14 @@
+import 'reflect-metadata';
+import { Injectable } from 'injection-js';
 import { catchError, map, Observable, of } from 'rxjs';
 import { Cron } from '../cron';
 import { ICron } from '../models/cron.model';
 import cron from 'cron';
-import * as CRONS_JSON from './crons-static.json';
+import * as CRON_JSON from './crons-static.json';
 
-const CRONS: ICron[] = (CRONS_JSON as any).default;
+const CRON_DATA: ICron[] = (CRON_JSON as any).default;
 
+@Injectable()
 export class CronsService {
 
     constructor(
@@ -14,7 +17,7 @@ export class CronsService {
     ) { }
 
     public getCrons(): Observable<ICron[]> {
-        return of(CRONS).pipe(
+        return of(CRON_DATA).pipe(
             catchError(() => of(null))
         );
     }

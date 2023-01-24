@@ -1,9 +1,12 @@
+import 'reflect-metadata';
+import { Injectable } from 'injection-js';
 import { catchError, map, Observable, of } from 'rxjs';
 import { IChannel } from '../models/channel.model';
 import * as CHANNELS_JSON from './channels-static.json';
 
 const CHANNELS: IChannel[] = (CHANNELS_JSON as any).default;
 
+@Injectable()
 export class ChannelsService {
 
     constructor(

@@ -1,53 +1,47 @@
-import { Client, GatewayIntentBits, Partials, TextChannel } from 'discord.js';
+import 'reflect-metadata';
+import { ReflectiveInjector } from 'injection-js';
 import moment from 'moment-mini';
 import * as dotenv from 'dotenv';
+import { DiscordClient } from './infra/discord/discordClient';
 import { ChannelsService } from './infra/channels.service';
 import { CronsService } from './infra/crons.service';
-
-const client = new Client({
-    intents: [
-        GatewayIntentBits.DirectMessages,
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMembers,
-        GatewayIntentBits.GuildBans,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMessageReactions,
-        GatewayIntentBits.DirectMessageReactions
-    ],
-    'partials': [
-        Partials.Channel
-    ]
-});
-
-const channelsService = new ChannelsService();
-const cronsService = new CronsService();
+import { TextChannelService } from './infra/discord/textChannel.service';
+import { Cron } from './cron';
 
 dotenv.config();
 
-client.once('ready', () => {
-    console.log(`Logged in as ${client.user.tag} - ${moment().toISOString()}`);
+const injector = ReflectiveInjector.resolveAndCreate([
+    DiscordClient,
+    TextChannelService,
+    ChannelsService,
+    CronsService,
+]);
+
+const discordClient = injector.get(DiscordClient);
+const cronsService = injector.get(CronsService);
+const textChannelService = injector.get(TextChannelService);
+
+discordClient.once('ready', () => {
+    console.log(`Logged in as ${discordClient.user.tag} - ${moment().toISOString()}`);
 
     // Send a message once in a specific channel
-    channelsService.getChannel('kimida-test').subscribe(
-        channel => {
-            let textChannel = client.channels.cache.get(channel.id) as TextChannel
-            textChannel.send("Lorem ipsum dolor sit amet");
+    textChannelService.sendMessage('kimida-test', 'Lorem ipsum dolor sit amet').subscribe(
+        (message: string) => {
+            console.log(`Message sent: ${message}`);
         }
-    )
+    );
 
     // Send a message periodically via cron in a specific channel
-    channelsService.getChannel('kimida-test').subscribe(
-        channel => {
-            cronsService.createCron('every-10-seconds', () => {
-                let textChannel = client.channels.cache.get(channel.id) as TextChannel
-                textChannel.send("Lorem ipsum dolor sit amet");
-            }).subscribe(
-                cron => cron.start()
-            );
-        }
+    cronsService.createCron('every-10-seconds', () => {
+        textChannelService.sendMessage('kimida-test', 'Lorem ipsum dolor sit amet').subscribe(
+            (message: string) => {
+                console.log(`Message sent: ${message}`);
+            }
+        );
+    }).subscribe(
+        (cron: Cron) => cron.start()
     );
 });
 
 // Your Discord bot token here
-client.login(process.env.TOKEN);
+discordClient.login(process.env.TOKEN);
