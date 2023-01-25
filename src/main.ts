@@ -1,21 +1,14 @@
-import 'reflect-metadata';
-import { ReflectiveInjector } from 'injection-js';
+import { AppModule } from './app.module';
 import moment from 'moment-mini';
 import * as dotenv from 'dotenv';
 import { DiscordClient } from './infra/discord/discordClient';
-import { ChannelsService } from './infra/channels.service';
 import { CronsService } from './infra/crons.service';
 import { TextChannelService } from './infra/discord/textChannel.service';
 import { Cron } from './cron';
 
 dotenv.config();
 
-const injector = ReflectiveInjector.resolveAndCreate([
-    DiscordClient,
-    TextChannelService,
-    ChannelsService,
-    CronsService,
-]);
+const injector = AppModule.getInjector();
 
 const discordClient = injector.get(DiscordClient);
 const cronsService = injector.get(CronsService);
