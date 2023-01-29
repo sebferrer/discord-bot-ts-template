@@ -4,14 +4,16 @@ import { ChannelsService } from "./infra/channels.service";
 import { CronsService } from "./infra/crons.service";
 import { DiscordClient } from "./infra/discord/discordClient";
 import { TextChannelService } from "./infra/discord/textChannel.service";
+import { CommandsDeployer } from './commands/deployer/commandsDeployer';
 
 export class AppModule {
     private static injector: ReflectiveInjector;
     private static providers: Provider[] = [
         DiscordClient,
+        CommandsDeployer,
         TextChannelService,
         ChannelsService,
-        CronsService,
+        CronsService
     ]
 
     private constructor() { }

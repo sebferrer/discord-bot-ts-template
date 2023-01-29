@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 import { Injectable } from 'injection-js';
-import { Client, GatewayIntentBits, Partials } from 'discord.js';
+import { Client, Collection, GatewayIntentBits, Partials } from 'discord.js';
 
 @Injectable()
 export class DiscordClient extends Client {
@@ -21,5 +21,6 @@ export class DiscordClient extends Client {
                 Partials.Channel
             ]
         });
+        this.commands = new Collection();
     }
 }

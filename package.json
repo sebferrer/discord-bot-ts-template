@@ -1,11 +1,12 @@
 {
-    "name": "discord-bot-sample",
+    "name": "discord-bot-template-ts",
     "private": true,
     "version": "0.0.1",
     "type": "module",
     "scripts": {
         "dev": "vite",
-        "start": "tsc && vite-node src/main.ts"
+        "start": "tsc && vite-node src/main.ts",
+        "deploy-commands": "tsc && vite-node src/deploy-commands.ts"
     },
     "devDependencies": {
         "@api-typings/discord": "^6.0.0",

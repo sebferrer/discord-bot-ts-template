@@ -1,21 +1,24 @@
-# Discord Bot Sample
+# Discord Bot Template in TypeScript
 
-This is a minimal architecture for building a discord bot, based on discord.js, vite-note, TypeScript & RxJS.
+This is a minimal architecture for building a discord bot in TypeScript, based on discord.js, vite-note, injection.js and RxJS.
 
 ## Examples
 
-This sample provides :
+This template provides :
 - A message sending in a text channel.
-- A periodic sending of message in a text channel via cron.
-
+- A periodic sending of message in a text channel via Cron.
+- A command builder with two examples (/help, /faq), and an Interaction listener.
+- A command deployer.
 
 ## Getting Started
 
-### Define your token
+### Define your Token, Client ID and Guild ID
 
-Create an .env file at the root of your project and define your Discord bot token in a variable as following:
+Create an .env file at the root of your project and define your Discord bot token, Client ID and Guild ID in a variable as following:
 ```shell
 TOKEN="Your_token_here"
+CLIENT_ID="Your_client_id_here"
+GUILD_ID="Your_guild_id_here"
 ```
 
 ### Define your channels
@@ -30,10 +33,21 @@ The channel IDs are defined in src/infra/channels-static.json
 ]
 ```
 
-### Build & Run
+### Install dependencies
 
-```
+```shell
 npm install
+```
+
+### Deploy commands
+
+```shell
+npm run deploy-commands
+```
+
+### Run
+
+```shell
 npm start
 ```
 

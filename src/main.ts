@@ -5,17 +5,32 @@ import { DiscordClient } from './infra/discord/discordClient';
 import { CronsService } from './infra/crons.service';
 import { TextChannelService } from './infra/discord/textChannel.service';
 import { Cron } from './cron';
+import { CommandsDeployer } from './commands/deployer/commandsDeployer';
+import { ACommand } from './commands/handlers/command';
+import { CommandInteraction, Events, Interaction } from 'discord.js';
 
 dotenv.config();
+
+/**
+ * Warning:
+ * The "noUnusedLocals" parameter in tsconfig is set to "false" in order for the commented examples to work if you uncomment them.
+ * It's strongly recommended to set it to "true" if you use this template as a base for your project.
+ */
 
 const injector = AppModule.getInjector();
 
 const discordClient = injector.get(DiscordClient);
+const commandsDeployer = injector.get(CommandsDeployer);
 const cronsService = injector.get(CronsService);
 const textChannelService = injector.get(TextChannelService);
 
-discordClient.once('ready', () => {
+discordClient.once(Events.ClientReady, () => {
     console.log(`Logged in as ${discordClient.user.tag} - ${moment().toISOString()}`);
+
+    // Add all commands to the client
+    commandsDeployer.commands.forEach(
+        (command: ACommand) => discordClient.commands.set(command.name, command)
+    );
 
     // Send a message once in a specific channel
     textChannelService.sendMessage('kimida-test', 'Lorem ipsum dolor sit amet').subscribe(
@@ -25,7 +40,7 @@ discordClient.once('ready', () => {
     );
 
     // Send a message periodically via cron in a specific channel
-    cronsService.createCron('every-10-seconds', () => {
+    /*cronsService.createCron('every-10-seconds', () => {
         textChannelService.sendMessage('kimida-test', 'Lorem ipsum dolor sit amet').subscribe(
             (message: string) => {
                 console.log(`Message sent: ${message}`);
@@ -33,7 +48,24 @@ discordClient.once('ready', () => {
         );
     }).subscribe(
         (cron: Cron) => cron.start()
-    );
+    );*/
+});
+
+discordClient.on(Events.InteractionCreate, async (interaction: Interaction) => {
+    const commandInteraction = interaction as CommandInteraction;
+    const command = interaction.client.commands.get(commandInteraction.commandName);
+    if (!command) {
+        console.error(`No command matching ${commandInteraction.commandName} was found.`);
+        return;
+    }
+
+    try {
+        command.execute(interaction);
+    }
+    catch (error) {
+        console.error(error);
+        commandInteraction.reply({ content: 'There was an error while executing this command!', ephemeral: true }).then(() => { });
+    }
 });
 
 // Your Discord bot token here
