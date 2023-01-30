@@ -1,6 +1,6 @@
 # Discord Bot Template in TypeScript
 
-This is a minimal architecture for building a discord bot in TypeScript, based on discord.js, vite-note, injection.js and RxJS.
+This is a minimal architecture for building a discord bot in TypeScript, based on discord.js, injection.js and RxJS.
 
 ## Examples
 
@@ -39,6 +39,12 @@ The channel IDs are defined in src/infra/channels-static.json
 npm install
 ```
 
+### Build
+
+```shell
+npm run build
+```
+
 ### Deploy commands
 
 ```shell
@@ -49,6 +55,13 @@ npm run deploy-commands
 
 ```shell
 npm start
+```
+
+### Deploy commands & Run with vite-node (dev)
+
+```shell
+npm run deploy-commands:dev
+npm start:dev
 ```
 
 ## References

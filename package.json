@@ -4,9 +4,11 @@
     "version": "0.0.1",
     "type": "module",
     "scripts": {
-        "dev": "vite",
-        "start": "tsc && vite-node src/main.ts",
-        "deploy-commands": "tsc && vite-node src/deploy-commands.ts"
+        "start:dev": "vite-node src/main.ts",
+        "build": "rm -rf ./dist/ && tsc && chmod +x dist/main.js",
+        "start": "node --experimental-specifier-resolution=node ./dist/main.js",
+        "deploy-commands:dev": "vite-node src/deploy-commands.ts",
+        "deploy-commands": "node --experimental-specifier-resolution=node ./dist/deploy-commands.js"
     },
     "devDependencies": {
         "@api-typings/discord": "^6.0.0",

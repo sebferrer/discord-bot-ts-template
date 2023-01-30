@@ -2,7 +2,7 @@ import 'reflect-metadata';
 import { Injectable } from 'injection-js';
 import { catchError, map, Observable, of } from 'rxjs';
 import { IChannel } from '../models/channel.model';
-import * as CHANNELS_JSON from './channels-static.json';
+import * as CHANNELS_JSON from './channels-static.json' assert { type: 'json' };
 
 const CHANNELS: IChannel[] = (CHANNELS_JSON as any).default;
 
