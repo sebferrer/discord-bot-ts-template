@@ -7,7 +7,7 @@ import { TextChannelService } from './infra/discord/textChannel.service';
 import { Cron } from './cron';
 import { CommandsDeployer } from './commands/deployer/commandsDeployer';
 import { ACommand } from './commands/handlers/command';
-import { CommandInteraction, Events, Interaction } from 'discord.js';
+import { CommandInteraction, Events, Interaction, Message } from 'discord.js';
 
 dotenv.config();
 
@@ -67,6 +67,12 @@ discordClient.on(Events.InteractionCreate, async (interaction: Interaction) => {
         commandInteraction.reply({ content: 'There was an error while executing this command!', ephemeral: true }).then(() => { });
     }
 });
+
+discordClient.on(Events.MessageCreate, (message: Message) => {
+    if (message.author.id === process.env.KIMIDA_ID) {
+        message.react('🐱');
+    }
+})
 
 // Your Discord bot token here
 discordClient.login(process.env.TOKEN);
