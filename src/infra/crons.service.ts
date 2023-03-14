@@ -4,7 +4,7 @@ import { catchError, map, Observable, of } from 'rxjs';
 import { Cron } from '../cron';
 import { ICron } from '../models/cron.model';
 import cron from 'cron';
-import * as CRON_JSON from './crons-static.json' assert { type: 'json' };
+import * as CRON_JSON from './crons-static.json';
 
 const CRON_DATA: ICron[] = (CRON_JSON as any).default;
 

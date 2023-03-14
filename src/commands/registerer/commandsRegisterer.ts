@@ -8,7 +8,7 @@ import { REST } from '@discordjs/rest';
 import * as dotenv from 'dotenv';
 
 @Injectable()
-export class CommandsDeployer {
+export class CommandsRegisterer {
 	private _commandNames = [
 		HelpCommand.NAME,
 		FAQCommand.NAME

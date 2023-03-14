@@ -8,7 +8,7 @@ This template provides :
 - A message sending in a text channel.
 - A periodic sending of message in a text channel via Cron.
 - A command builder with two examples (/help, /faq), and an Interaction listener.
-- A command deployer.
+- A command registerer.
 
 ## Getting Started
 

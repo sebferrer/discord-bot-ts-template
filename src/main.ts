@@ -5,7 +5,7 @@ import { DiscordClient } from './infra/discord/discordClient';
 import { CronsService } from './infra/crons.service';
 import { TextChannelService } from './infra/discord/textChannel.service';
 import { Cron } from './cron';
-import { CommandsDeployer } from './commands/deployer/commandsDeployer';
+import { CommandsRegisterer } from './commands/registerer/commandsRegisterer';
 import { ACommand } from './commands/handlers/command';
 import { CommandInteraction, Events, Interaction, Message } from 'discord.js';
 
@@ -20,7 +20,7 @@ dotenv.config();
 const injector = AppModule.getInjector();
 
 const discordClient = injector.get(DiscordClient);
-const commandsDeployer = injector.get(CommandsDeployer);
+const commandsRegisterer = injector.get(CommandsRegisterer);
 const cronsService = injector.get(CronsService);
 const textChannelService = injector.get(TextChannelService);
 
@@ -28,7 +28,7 @@ discordClient.once(Events.ClientReady, () => {
     console.log(`Logged in as ${discordClient.user.tag} - ${moment().toISOString()}`);
 
     // Add all commands to the client
-    commandsDeployer.commands.forEach(
+    commandsRegisterer.commands.forEach(
         (command: ACommand) => discordClient.commands.set(command.name, command)
     );
 
