@@ -70,7 +70,14 @@ discordClient.on(Events.InteractionCreate, async (interaction: Interaction) => {
 
 discordClient.on(Events.MessageCreate, (message: Message) => {
     if (message.author.id === process.env.KIMIDA_ID) {
+        // React
         message.react('🐱');
+        // Custom react
+        // message.react(discordClient.emojis.cache.find((emoji: any) => emoji.name === 'my-custom-emote'));
+        // Ordered chained reacts
+        /* message.react('😺')
+            .then(() => message.react('😼'))
+            .then(() => message.react('🙀')); */
     }
 })
 
